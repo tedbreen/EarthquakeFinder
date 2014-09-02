@@ -23,6 +23,7 @@ function geocode(loc) {
       var bounds = parseResponse(resp).bounds;
       var coords = parseResponse(resp).coords;
       getEarthquakes( bounds );
+      recenterMap( coords );
     }
   });
 }
