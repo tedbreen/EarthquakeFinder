@@ -22,8 +22,9 @@ function geocode(loc) {
     success: function (resp) {
       var bounds = parseResponse(resp).bounds;
       var coords = parseResponse(resp).coords;
-      getEarthquakes( bounds );
-      recenterMap( coords );
+      // recenterMap( coords );
+      // compile list of earthquakes and make markers for them
+      getEarthquakes( coords, bounds );
     }
   });
 }
@@ -47,7 +48,7 @@ function parseResponse(resp) {
   return data;
 }
 
-function getEarthquakes(bounds) {
+function getEarthquakes(coords, bounds) {
   var url = 'http://api.geonames.org/earthquakesJSON?';
   url += $.param(bounds);
   $.ajax({
@@ -55,7 +56,8 @@ function getEarthquakes(bounds) {
     dataType: 'json',
     method: 'GET',
     success: function(resp) {
-      console.log(resp);
+      var allQuakes = resp.earthquakes;
+      recenterMap( coords, allQuakes );
     }
   });
 }
