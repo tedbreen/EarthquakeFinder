@@ -1,9 +1,3 @@
-var button = document.getElementById('submit');
-
-button.addEventListener('click', function () {
-  geocode( submitForm() );
-});
-
 function submitForm() {
   var city = document.getElementById('city');
   var state = document.getElementById('state');
@@ -29,7 +23,6 @@ function geocode(loc) {
       var bounds = parseResponse(resp).bounds;
       var coords = parseResponse(resp).coords;
       getEarthquakes( bounds );
-      console.log(coords);
     }
   });
 }
@@ -51,12 +44,6 @@ function parseResponse(resp) {
     'coords': coords
   };
   return data;
-}
-
-function parseResults(result) {
-  
-  var lat = result.geometry.location.lat;
-  var lng = result.geometry.location.lng;
 }
 
 function getEarthquakes(bounds) {
