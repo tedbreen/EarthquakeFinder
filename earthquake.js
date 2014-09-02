@@ -1,4 +1,5 @@
-var zoom = 2;
+var zoom = 2; // initial map zoom setting
+var openWindow; // used with marker click event
 
 window.onload = function () {
  loadScript();
@@ -12,16 +13,20 @@ window.onload = function () {
 };
 
 function initializeMap() {  //callback parameter for loadScript()
+  var dateToday = new Date();
+  var lastYr = dateToday.getFullYear() - 1;
+  var yearAgo = lastYr + '-' + (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
   var coords = {
     'lat': 0,
-    'lng': 45
+    'lng': 10
   };
   var bounds = {
     'north': 90,
     'south': -90,
     'west': -180,
     'east': 180,
-    'username': 'tedbreen'
+    'username': 'tedbreen',
+    'date': yearAgo
   };
   getEarthquakes(coords, bounds);
 }
@@ -68,13 +73,17 @@ function addMarkers(map, quake) {
     map: map,
     animation: google.maps.Animation.DROP
   });
-  var infowindow = infoBox(quake);
+  var infowindow = createInfoWindow(quake);
   google.maps.event.addListener(marker, 'click', function() {
+    if (openWindow !== undefined) {
+      openWindow.close();      
+    }
+    openWindow = infowindow;
     infowindow.open(map, marker);
   });
 }
 
-function infoBox(quake) {
+function createInfoWindow(quake) {
   var contentStr = '<p><strong>' + dateFormatter(quake.datetime) + '</strong></p>' +
     '<p>Magnitude: ' + quake.magnitude + '</p>' +
     '<p>Depth: ' + quake.depth + '</p>';
@@ -86,11 +95,9 @@ function infoBox(quake) {
 
 function submitForm() {
   var city = document.getElementById('city');
-  var state = document.getElementById('state');
-  var loc = city.value + ', ' + state.value;
+  var loc = city.value
   changeMsg("You searched for: " + loc);
   city.value = "";
-  state.value = "";
   return loc;
 }
 
