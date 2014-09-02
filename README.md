@@ -16,5 +16,4 @@ http://earthquakefinder.s3-website-us-west-1.amazonaws.com/
 * Things to do for the future:
   * In addition to the markers, make an actual list to display the results.
   * Display location data in the marker InfoWindows
-  * Clean up earthquake.js script
-  * Dates in InfoWindows do not seems to work correctly when page is viewed in Firefox and Safari (fine in Chrome)
+  * Clean up and refactor earthquake.js script

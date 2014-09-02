@@ -15,7 +15,8 @@ window.onload = function () {
 function initializeMap() {  //callback parameter for loadScript()
   var dateToday = new Date();
   var lastYr = dateToday.getFullYear() - 1;
-  var yearAgo = lastYr + '-' + (dateToday.getMonth() + 1) + '-' + dateToday.getDate();
+  var yearAgo = lastYr + '-' + (dateToday.getMonth() + 1) +
+    '-' + dateToday.getDate();
   var coords = {
     'lat': 0,
     'lng': 10
@@ -139,16 +140,8 @@ function parseResponse(resp) {
 }
 
 function dateFormatter(dateStr) {
-  var date = new Date(dateStr);
-  var months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  var month = months[ date.getMonth() ];
-  var num = date.getDate();
-  var year = date.getFullYear();
-  var fullDate = month + " " + num + ", " + year;
-  return fullDate;
+  var date = dateStr.split(' ')[0]
+  return date;
 }
 
 function changeMsg(msg) {
