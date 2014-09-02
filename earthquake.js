@@ -1,6 +1,17 @@
 var zoom = 2;
 
-function initializeMap() {
+window.onload = function () {
+ loadScript();
+ var button = document.getElementById('submit');
+ button.addEventListener('click', function () {
+   if (zoom !== 8) {
+     zoom = 8;
+   }
+   geocode( submitForm() );
+ });
+};
+
+function initializeMap() {  //callback parameter for loadScript()
   var coords = {
     'lat': 0,
     'lng': 45
@@ -21,6 +32,20 @@ function loadScript() {
   script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
       'callback=initializeMap';
   document.body.appendChild(script);
+}
+
+function getEarthquakes(coords, bounds) {
+  var url = 'http://api.geonames.org/earthquakesJSON?';
+  url += $.param(bounds);
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    method: 'GET',
+    success: function(resp) {
+      var allQuakes = resp.earthquakes;
+      recenterMap( coords, allQuakes );
+    }
+  });
 }
 
 function recenterMap(coords, quakes) {
@@ -49,21 +74,8 @@ function addMarkers(map, quake) {
   });
 }
 
-function dateFormatter(dateStr) {
-  var date = new Date(dateStr);
-  var months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  var month = months[ date.getMonth() ];
-  var num = date.getDate();
-  var year = date.getFullYear();
-  var fullDate = month + " " + num + ", " + year;
-  return fullDate;
-}
-
 function infoBox(quake) {
-  var contentStr = '<p>' + dateFormatter(quake.datetime) + '<p>' +
+  var contentStr = '<p><strong>' + dateFormatter(quake.datetime) + '</strong></p>' +
     '<p>Magnitude: ' + quake.magnitude + '</p>' +
     '<p>Depth: ' + quake.depth + '</p>';
   var infoBox = new google.maps.InfoWindow({
@@ -76,6 +88,7 @@ function submitForm() {
   var city = document.getElementById('city');
   var state = document.getElementById('state');
   var loc = city.value + ', ' + state.value;
+  changeMsg("You searched for: " + loc);
   city.value = "";
   state.value = "";
   return loc;
@@ -93,7 +106,6 @@ function geocode(loc) {
     method: 'GET',
     success: function (resp) {
       var bounds = parseResponse(resp).bounds;
-      console.log(bounds);
       var coords = parseResponse(resp).coords;
       getEarthquakes( coords, bounds );
     }
@@ -119,28 +131,26 @@ function parseResponse(resp) {
   return data;
 }
 
-function getEarthquakes(coords, bounds) {
-  var url = 'http://api.geonames.org/earthquakesJSON?';
-  url += $.param(bounds);
-  $.ajax({
-    url: url,
-    dataType: 'json',
-    method: 'GET',
-    success: function(resp) {
-      var allQuakes = resp.earthquakes;
-      recenterMap( coords, allQuakes );
-    }
-  });
+function dateFormatter(dateStr) {
+  var date = new Date(dateStr);
+  var months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  var month = months[ date.getMonth() ];
+  var num = date.getDate();
+  var year = date.getFullYear();
+  var fullDate = month + " " + num + ", " + year;
+  return fullDate;
 }
 
-window.onload = function () {
- loadScript();
- var button = document.getElementById('submit');
- button.addEventListener('click', function () {
-   if (zoom !== 8) {
-     zoom = 8;
-   }
-   geocode( submitForm() );
- });
+function changeMsg(msg) {
+  var divMsg = document.getElementById('div-msg');
+  var oldMsg = document.getElementById('span-msg');
+  var msgContent = document.createTextNode(msg);
+  var newMsg = document.createElement('span');
+  newMsg.setAttribute('id', 'span-msg');
+  newMsg.appendChild(msgContent);
+  divMsg.replaceChild(newMsg, oldMsg);
 }
 
