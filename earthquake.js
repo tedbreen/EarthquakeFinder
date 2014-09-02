@@ -13,10 +13,6 @@ window.onload = function () {
 };
 
 function initializeMap() {  //callback parameter for loadScript()
-  var dateToday = new Date();
-  var lastYr = dateToday.getFullYear() - 1;
-  var yearAgo = lastYr + '-' + (dateToday.getMonth() + 1) +
-    '-' + dateToday.getDate();
   var coords = {
     'lat': 0,
     'lng': 10
@@ -26,8 +22,7 @@ function initializeMap() {  //callback parameter for loadScript()
     'south': -90,
     'west': -180,
     'east': 180,
-    'username': 'tedbreen',
-    'date': yearAgo
+    'username': 'tedbreen'
   };
   getEarthquakes(coords, bounds);
 }
