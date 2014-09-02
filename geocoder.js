@@ -26,8 +26,10 @@ function geocode(loc) {
     dataType: 'json',
     method: 'GET',
     success: function (resp) {
-      var bounds = parseResponse(resp);
+      var bounds = parseResponse(resp).bounds;
+      var coords = parseResponse(resp).coords;
       getEarthquakes( bounds );
+      console.log(coords);
     }
   });
 }
@@ -44,7 +46,11 @@ function parseResponse(resp) {
     'lat': resp.results[0].geometry.location.lat,
     'lng': resp.results[0].geometry.location.lng
   };
-  return bounds;
+  var data = {
+    'bounds': bounds,
+    'coords': coords
+  };
+  return data;
 }
 
 function parseResults(result) {
