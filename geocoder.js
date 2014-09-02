@@ -1,12 +1,10 @@
-// var api_key = 
-
 var button = document.getElementById('submit');
 
 button.addEventListener('click', function () {
-  geocode( getLoc() );
+  geocode( submitForm() );
 });
 
-function getLoc() {
+function submitForm() {
   var city = document.getElementById('city');
   var state = document.getElementById('state');
   var loc = city.value + ', ' + state.value;
@@ -22,26 +20,48 @@ function geocode(loc) {
     'key': 'AIzaSyCIbLULWH2kMQyb2oINrSVmSd4530p6tJA',
     'address': loc
   };
-  url += $.param(query);  
+  url += $.param(query);
+  $.ajax({
+    url: url,
+    dataType: 'json',
+    method: 'GET',
+    success: function (resp) {
+      var bounds = parseResponse(resp);
+      getEarthquakes( bounds );
+    }
+  });
+}
+
+function parseResponse(resp) {
+  var bounds = {
+    'north': resp.results[0].geometry.bounds.northeast.lat,
+    'east': resp.results[0].geometry.bounds.northeast.lng,
+    'south': resp.results[0].geometry.bounds.southwest.lat,
+    'west': resp.results[0].geometry.bounds.southwest.lng,
+    'username': 'tedbreen'
+  };
+  var coords = {
+    'lat': resp.results[0].geometry.location.lat,
+    'lng': resp.results[0].geometry.location.lng
+  };
+  return bounds;
+}
+
+function parseResults(result) {
+  
+  var lat = result.geometry.location.lat;
+  var lng = result.geometry.location.lng;
+}
+
+function getEarthquakes(bounds) {
+  var url = 'http://api.geonames.org/earthquakesJSON?';
+  url += $.param(bounds);
   $.ajax({
     url: url,
     dataType: 'json',
     method: 'GET',
     success: function(resp) {
-      if (resp.status === 'OK') {
-        return resp.results[0];
-      } else {
-        return "that didn't work";
-      }
+      console.log(resp);
     }
   });
-}
-
-function parseResults(result) {
-  var north = result.geometry.bounds.northeast.lat;
-  var east = result.geometry.bounds.northeast.lng;
-  var south = result.geometry.bounds.southwest.lat;
-  var west = result.geometry.bounds.southwest.lng;
-  var lat = result.geometry.location.lat;
-  var lng = result.geometry.location.lng;
 }
