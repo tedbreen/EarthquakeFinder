@@ -6,11 +6,11 @@
 ### Bonus:
 4. Create a list of the top 10 largest earthquakes in the world for the last 12 months.  This should be displayed somewhere on the page.
 
+---
 ### Result:
 http://earthquakefinder.s3-website-us-west-1.amazonaws.com/
 
----
-#### Notes:
+### Notes:
 * When the page first loads, the top 10 earthquakes from the past year are marked.  These marks disappear when a city/location is entered and submitted.
 * The top 10 earthquakes were found by setting the bounding box to cover the entire globe (latitude limits of -90 and 90, longitude limits of -180 and 180).
 * Things to do for the future:
