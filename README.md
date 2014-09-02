@@ -1,7 +1,7 @@
 ## Bluewolf coding challenge #2
-1. Create a web page that takes as input a city/location name.
-2. This page should call the GeoNames Recent Earthquake WebService (http://www.geonames.org/export/JSON-webservices.html#earthquakesJSON), with a bounding box dictated by the city entered.
-3. Plot the results on a Google Map (https://developers.google.com/maps/). Each marker on this map should display details of the earthquake plotted.
+1. Create a web page that takes as input a city/location name. `done`
+2. This page should call the GeoNames Recent Earthquake WebService (http://www.geonames.org/export/JSON-webservices.html#earthquakesJSON), with a bounding box dictated by the city entered. `done`
+3. Plot the results on a Google Map (https://developers.google.com/maps/). Each marker on this map should display details of the earthquake plotted. `done`
 
 ### Bonus:
 4. Create a list of the top 10 largest earthquakes in the world for the last 12 months.  This should be displayed somewhere on the page.
@@ -17,3 +17,4 @@ http://earthquakefinder.s3-website-us-west-1.amazonaws.com/
   * In addition to the markers, make an actual list to display the results.
   * Display location data in the marker InfoWindows
   * Clean up and refactor earthquake.js script
+  * Figure out how to query for earthquakes in a date range.  Currently can only retrieve earthquakes older or equal to a date that is provided.
