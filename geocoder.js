@@ -2,7 +2,6 @@ function submitForm() {
   var city = document.getElementById('city');
   var state = document.getElementById('state');
   var loc = city.value + ', ' + state.value;
-  // var loc = encodeURI(city.value + ', ' + state.value);
   city.value = "";
   state.value = "";
   return loc;
@@ -11,7 +10,6 @@ function submitForm() {
 function geocode(loc) {
   var url = 'https://maps.googleapis.com/maps/api/geocode/json?';
   var query = {
-    'key': 'AIzaSyCIbLULWH2kMQyb2oINrSVmSd4530p6tJA',
     'address': loc
   };
   url += $.param(query);
@@ -22,8 +20,6 @@ function geocode(loc) {
     success: function (resp) {
       var bounds = parseResponse(resp).bounds;
       var coords = parseResponse(resp).coords;
-      // recenterMap( coords );
-      // compile list of earthquakes and make markers for them
       getEarthquakes( coords, bounds );
     }
   });
