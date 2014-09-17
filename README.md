@@ -1,4 +1,6 @@
-## Description
+## Earthquake Finder
+---
+### Description:
 1. Web page takes as input a city/location name.
 2. Calls the GeoNames Recent Earthquake WebService (http://www.geonames.org/export/JSON-webservices.html#earthquakesJSON) for earthquake data.
 3. Earthquakes are designated with markers on a Google Map (https://developers.google.com/maps/). Each marker will display details of the earthquake when clicked.
