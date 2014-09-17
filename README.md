@@ -1,5 +1,5 @@
 ## Earthquake Finder
----
+
 ### Description:
 1. Web page takes as input a city/location name.
 2. Calls the GeoNames Recent Earthquake WebService (http://www.geonames.org/export/JSON-webservices.html#earthquakesJSON) for earthquake data.
