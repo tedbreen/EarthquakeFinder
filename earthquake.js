@@ -1,16 +1,16 @@
 var zoom = 2; // initial map zoom setting
 var openWindow; // used with marker click event
 
-window.onload = function () {
- loadScript();
- var button = document.getElementById('submit');
- button.addEventListener('click', function () {
-   if (zoom !== 8) {
-     zoom = 8;
-   }
-   geocode( submitForm() );
- });
-};
+$( document ).ready( function () {
+  loadScript();
+  var button = document.getElementById('submit');
+  button.addEventListener('click', function () {
+    if (zoom !== 8) {
+      zoom = 8;
+    }
+    geocode( submitForm() );
+  });
+});
 
 function initializeMap() {  //callback parameter for loadScript()
   var coords = {
@@ -148,4 +148,3 @@ function changeMsg(msg) {
   newMsg.appendChild(msgContent);
   divMsg.replaceChild(newMsg, oldMsg);
 }
-
